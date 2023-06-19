@@ -8,30 +8,28 @@ import { getAuth, } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-aut
 import { firebaseConfig } from "../firebase.js";
 import { universalModalFunctionality } from "./universalModalModule.js";
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
 
 
-// functions responsible for rendering categories in table
+
 let catNo = 0;
-// Function responsible for rendering category table panel for admin
+
 function categoryTableHeader() {
 
   const categoryContainer = document.querySelector('.categoryContainer');
   categoryContainer.innerHTML = `
-          <div class="container table-container my-5 card">
+          <div class="container table-container my-2 card">
           <h2>Categories:</h2>
           <table class="table table-bordered table-hover category-table">
               <thead>
-                  <th class="text-center">Nr</th>
+                  <th class="text-center">Category number</th>
                   <th class="d-flex flex-row categories-input-container">
-                    <input type="text" class="form-control category-input" id="search-name" placeholder="Enter new category name...">
-                    <button class="btn btn-primary enterCategoryBtn">Enter</button>
+                    <input type="text" class="form-control category-input" id="search-name" placeholder="Enter category">
+                    <button class="btn btn-primary enterCategoryBtn">Add</button>
                   </th>
-                  <th class=userDeleteIcon><i class="fa-solid fa-trash"></i></th>
               </thead>
               <tbody class="tbody2"></tbody>
           </table>
@@ -79,19 +77,17 @@ function AddAllItemsToCategoryTable(categories) {
     AddCategoryToTable(categories[i].category, i);
   }
 }
-// end of functions responsible for display of categories in table
 
 function addCategoryBtnFunction() {
   const categoryInput = document.querySelector('.category-input').value;
 
-  if (categoryInput.length < 3) {
-    universalModalFunctionality('Catgegory name should be atleast 3 symbols');
+  if (categoryInput.length < 5) {
+    universalModalFunctionality('Name must be atleast 5 symbols');
   } else {
     set(ref(database, 'categories/' + categoryInput), {
       category: categoryInput
     })
       .then(() => {
-        // universalModalFunctionality('Catgegory added successfully');
         window.location.reload();
       })
       .catch((error) => {
@@ -102,7 +98,6 @@ function addCategoryBtnFunction() {
 
 
 function delCategoryBtnsFunction() {
-  // deleting category from firebase
   const delCategoryBtns = document.querySelectorAll('.delCategoryBtn');
   delCategoryBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -112,7 +107,7 @@ function delCategoryBtnsFunction() {
         if (snapshot.exists()) {
           remove(ref(database, `categories/${uniqueBtnID}`))
             .then(() => {
-              // universalModalFunctionality('Catgegory deleted successfully');
+              // universalModalFunctionality('Category deleted successfully');
               window.location.reload();
             })
             .catch((error) => {

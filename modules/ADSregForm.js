@@ -21,11 +21,11 @@ function creatingAdsForm() {
         <div class="row d-flex justify-content-center ads-reg-form">
             <div class="col-md-8">
                 <div class="card">
-                    <h2 class="card-title text-center">Advertisment registration form</h2>
+                    <h2 class="card-title text-center">Event registration form</h2>
                     <div class="card-body py-md-4">
                         <form>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="ads-name" placeholder="Enter advertisement name">
+                                <input type="text" class="form-control" id="ads-name" placeholder="Enter event name">
                             </div>
                             <div class="form-group">
                                 <select class="form-select form-control" id="form-selection" aria-label="Default select example">
@@ -34,10 +34,12 @@ function creatingAdsForm() {
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" id="ads-about" rows="5"
-                                placeholder="Advertisement description"></textarea>
+                                placeholder="Event description"></textarea>
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control" id="price" placeholder="Price">
+                            <textarea class="form-control" id="price" rows=""
+                                placeholder="Enter date (YYYY-MM-DD)"></textarea>
+        
                             </div>
                             <div class="my-3">
                                 <input type="text" class="form-control" id="picture-name" placeholder="Insert picture HTML...">
@@ -77,14 +79,14 @@ function creatingAdsForm() {
     uploadAdsBtn.addEventListener('click', (e) => {
         e.preventDefault();
         // checking if input fields are not emty
-        if (adsNameInput.value.length < 3) {
-            universalModalFunctionality('Advertisement name should be more than 3 symbols');
-        } else if (adsSelectInput.value === 'Select your category') {
-            universalModalFunctionality('Please select a catagory');
-        } else if (adsTextareaInput.value.length < 10) {
-            universalModalFunctionality('Description should be atleast 10 symbols');
+        if (adsNameInput.value.length < 5) {
+            universalModalFunctionality('Event name should be more than 5 symbols');
+        } else if (adsSelectInput.value === 'Select category') {
+            universalModalFunctionality('Select a category first');
+        } else if (adsTextareaInput.value.length < 15) {
+            universalModalFunctionality('Description should be atleast 15 symbols');
         } else if (adsPriceInput.value <= 0) {
-            universalModalFunctionality('Price should be more than 0');
+            universalModalFunctionality('Time should be more than 0');
         } else if (adsPictureInput.value.length < 10) {
             universalModalFunctionality('Please insert HTML photo link');
         } else {
@@ -100,7 +102,7 @@ function creatingAdsForm() {
             })
                 .then(() => {
                     // after uploading info getting modal message
-                    // universalModalFunctionality('Advertisement uploaded successfully');
+                    // universalModalFunctionality('Event uploaded successfully');
                     window.location.reload();
                 })
                 .catch((error) => {

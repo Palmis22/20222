@@ -8,29 +8,26 @@ import { getAuth, deleteUser} from "https://www.gstatic.com/firebasejs/9.16.0/fi
 import { firebaseConfig } from "../firebase.js";
 import { universalModalFunctionality } from "./universalModalModule.js";
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-// functions responsible for display of registered Users in table
 let userNr = 0;
 
-// Function responsible for rendering user table panel for admin
 function userTableHeader() {
   const userTableContainer = document.querySelector('.userTableContainer');
 
   userTableContainer.innerHTML = `
-            <div class="container table-container my-5 card">
+            <div class="container table-container my-2 card">
               
-                  <h2>Users:</h2>
-                  <table class="table table-bordered table-hover user-table">
+                  <h2>Registered users:</h2>
+                  <table class="table table-hover table-dark user-table">
                       <thead>
-                          <th class="text-center">Nr</th>
-                          <th class="text-center">email</th>
-                          <th class="text-center user-role">role</th>
-                          <th class="text-center user-date">date</th>
-                          <th class=userDeleteIcon><i class="fa-solid fa-user-lock" id="userUnLockLogo"></i></th>
+                          <th class="text-center">User number</th>
+                          <th class="text-center">User email</th>
+                          <th class="text-center user-role">User role</th>
+                          <th class="text-center user-date">Date registered</th>
+                          
                       </thead>
                       <tbody class="tbody1"></tbody>
                   </table>
@@ -55,7 +52,7 @@ function AddItemToTable(email, role, date, key, banStatus) {
   td3.classList.add('text-center', 'user-role');
   let td4 = document.createElement('td');
   td4.classList.add('text-center', 'user-date');
-  // let td5 = document.createElement('td');
+  
 
   let td6 = document.createElement('td');
   td6.classList.add('bannedOrNo', 'd-flex', 'justify-content-center', 'align-items-center');
@@ -64,11 +61,11 @@ function AddItemToTable(email, role, date, key, banStatus) {
   td2.innerHTML = email;
   td3.innerHTML = role;
   td4.innerHTML = date;
-  // td5.innerHTML = `<button class="btn btn-primary deleteUserBtn">Delete</button>`
+  
   if (banStatus) {
-    td6.innerHTML = `<button class="btn btn-primary userUnblockBtn">UnBlock</button>`
+    td6.innerHTML = `<button class="btn btn-primary userUnblockBtn">Press to UnBlock</button>`
   } else {
-    td6.innerHTML = `<button class="btn btn-primary userBlockBtn">Block</button>`
+    td6.innerHTML = `<button class="btn btn-primary userBlockBtn">Press to Block</button>`
   }
   
 
@@ -76,7 +73,6 @@ function AddItemToTable(email, role, date, key, banStatus) {
   trow.appendChild(td2);
   trow.appendChild(td3);
   trow.appendChild(td4);
-  // trow.appendChild(td5);
   trow.appendChild(td6);
 
   tbody1.appendChild(trow);
@@ -94,46 +90,10 @@ function AddAllItemsToTable(User) {
     }
   }
 };
-// end of functions responsible for display of registered Users in table
-
-
-// function deleteUserBtnsFunction() {
-//   // selecting information delete button
-//   const deleteUserBtns = document.querySelectorAll('.deleteUserBtn');
-//   deleteUserBtns.forEach(btn => {
-//     btn.addEventListener('click', () => {
-//       const uniqueBtnID = btn.parentElement.parentElement.getAttribute('data-id');
-//       console.log(uniqueBtnID);
-//       get(ref(database, `Users/${uniqueBtnID}`)).then((snapshot) => {
-//         console.log(uniqueBtnID)
-//         if (snapshot.exists()) {
-//           remove(ref(database, `Users/${uniqueBtnID}`))
-//             .then(() => {
-//               // alert("Data deleted successfully")
-//               // window.location.reload();
-//             })
-//             .catch((error) => {
-//               alert(error);
-//             });
-//             deleteUser(uniqueBtnID).then(() => {
-//               console.log('istryne istikro')
-//               alert("Data deleted successfully")
-//               window.location.reload();
-//             }).catch((error) => {
-//               console.log(error)
-//             });
-//         } else {
-//           console.log("No data available")
-//         }
-//       })  
-//     })
-//   })
-// };
 
 
 function banUserBtnsFunctionality() {
   const banUserBtns = document.querySelectorAll('.bannedOrNo');
-  // const bannedUsers = [];
   banUserBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       
@@ -147,8 +107,8 @@ function banUserBtnsFunctionality() {
             banStatus: true
           })
             .then(() => {
-              btn.innerHTML = `<button class="btn btn-primary userUnblockBtn">UnBlock</button>`;
-              universalModalFunctionality('User blocked successfully!');
+              btn.innerHTML = `<button class="btn btn-primary userUnblockBtn">Press to Unblock</button>`;
+              universalModalFunctionality('This user was blocked');
             })
             .catch((error) => {
               console.log(error);
@@ -158,8 +118,8 @@ function banUserBtnsFunctionality() {
             banStatus: false
           })
             .then(() => {
-              btn.innerHTML = `<button class="btn btn-primary userBlockBtn">Block</button>`;
-              universalModalFunctionality('User unblocked successfully!');
+              btn.innerHTML = `<button class="btn btn-primary userBlockBtn">Press to Block</button>`;
+              universalModalFunctionality('This user was Unblocked');
             })
             .catch((error) => {
               console.log(error);
@@ -170,13 +130,12 @@ function banUserBtnsFunctionality() {
   })
 }
 
-// main user Table function
+
 function userTable() {
   get(ref(database, 'Users/')).then((snapshot) => {
     const userData = snapshot.val();
     userTableHeader();
     AddAllItemsToTable(userData);
-    // deleteUserBtnsFunction();
     banUserBtnsFunctionality()
   });
 };

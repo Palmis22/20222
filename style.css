@@ -4,17 +4,18 @@
 
 :root {
   --red: #da5767;
-  --hoverRed: #df8c96;
+  --green: #0aab60;
+  --hoverRed: #9a6369;
   --white: #ffffff;
   --black: #1D1D1D;
-  --favoriteGold: #FFDC00;
-  --favoriteGoldHover: #ffeb6a;
+  --favoriteGold: #e0cd50;
+  --favoriteGoldHover: #e7ca10;
   --adsLogoColorHover: #D5D5D5;
-  --darkGrey: #494949;
-  --unblockColor: #3D9970;
-  --unblockColorHover: #5ac092;
+  --darkGrey: #635f5f;
+  --unblockColor: #129f60;
+  --unblockColorHover: #1d794f;
   --modalsBorderColor: #f8f9fa;
-  --modalsOverlayColor: rgba(82, 87, 90, 0.5);
+  --modalsOverlayColor: rgba(108, 121, 129, 0.5);
   --headerFontStyle: 'Lobster', cursive;
   --textFontStyle: 'Poppins', sans-serif;
 }
@@ -29,16 +30,12 @@
 
 /* all the global css styling */
 
-body {
-  width: 100vw;
-  background: url("./images/446984.jpg") top right no-repeat;
-  background-attachment: fixed;
-  background-size: 112%;
-}
+
 
 h2 {
   padding-top: 1.5rem;
 }
+
 
 th {
   font-size: 20px;
@@ -64,7 +61,7 @@ h2 {
 .form-control {
   background-color: var(--white);
   padding: 20px;
-  padding: 25px 15px;
+  padding: 15px 25px;
   margin-bottom: 1.3rem;
 }
 
@@ -75,21 +72,21 @@ h2 {
 .form-control:focus {
   color: #000000;
   background-color: var(--white);
-  border: 3px solid var(--red);
+  border: 4px solid var(--green);
   outline: 0;
   box-shadow: none;
 }
 
 .btn {
-  padding: 0.6rem 1.2rem;
-  background: var(--red);
-  border: 2px solid var(--red);
+  padding: 0.6rem 1.9rem;
+  background: var(--green);
+  border: 2px solid var(--black);
 }
 
 .btn-primary:hover {
   background-color: var(--hoverRed);
   border-color: var(--hoverRed);
-  transition: .3s;
+  transition: .5s;
 }
 
 .text-center {
@@ -100,47 +97,31 @@ h2 {
 
 .userHello {
   position: absolute;
-  top: 10px;
+  top: 20px;
   display: flex;
-  gap: 10px;
-  margin-left: 10px;
-  font-size: 20px;
+  gap: 50px;
+  margin-left: 15px;
+  font-size: px;
   font-weight: 600;
 }
 
-.logoutBtnContainer {
-  height: 50px;
-}
+
 
 .logoutBtn {
   float: right;
-  margin: 15px 20px 15px 15px;
-  color: var(--red);
-  font-size: 30px;
-  animation: bounce 2s ease-in-out infinite;
+  margin: 5px 5px 5px 5px;
+  color: var(--green);
+  font-size: 45px;
+
 
 }
 
 .logoutBtn:hover {
   cursor: pointer;
-  color: var(--hoverRed);
-  transition: .3s;
+  
+  
 }
 
-
-@keyframes bounce {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.5);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
 
 /* main body container styling */
 
@@ -194,26 +175,27 @@ h2 {
 
 img {
   /* object-fit: cover; */
-  height: 250px;
+  height: 300px;
   width: 250px;
   object-fit: cover;
 }
 
 .adsContainer {
-  gap: 10px;
-  margin: 20px;
+  gap: 5px;
+  margin: 25px;
 }
 
 .price {
-  float: right;
-  background-color: var(--red);
+  float: center;
+  text-align: center;
+  background-color: var(--green);
   color: var(--white);
-  border-radius: 5px;
-  padding: 5px;
+  border-radius: 2px;
+  padding: 9px;
 }
 
 .photo-title {
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .adsDelI {
@@ -227,7 +209,7 @@ img {
 .fa-square-minus:hover {
   cursor: pointer;
   color: var(--adsLogoColorHover);
-  transition: .3s;
+  transition: .5s;
 }
 
 .favoriteBtn {
@@ -239,7 +221,7 @@ img {
 .favoriteBtn:hover {
   cursor: pointer;
   color: var(--favoriteGoldHover);
-  transition: .3s;
+  transition: .5s;
 }
 
 /* ads container photo tags i delete and
@@ -248,7 +230,7 @@ so that it would not show at first and it would show only those
 ads that have class deleteAdsBtn or updateAdsBtn */
 
 .adsUpdateI {
-  color: var(--white);
+  color: var(--red);
   font-size: 30px;
   padding: 6.5px;
   z-index: 500;
@@ -259,7 +241,7 @@ ads that have class deleteAdsBtn or updateAdsBtn */
 .fa-square-pen:hover {
   cursor: pointer;
   color: var(--adsLogoColorHover);
-  transition: .3s;
+  transition: .5s;
 }
 
 .deleteAdsBtn,
@@ -268,7 +250,7 @@ ads that have class deleteAdsBtn or updateAdsBtn */
 }
 
 .commentBtn {
-  color: var(--white);
+  color: var(--green);
   font-size: 30px;
   padding: 6.5px;
   z-index: 500;
@@ -278,7 +260,7 @@ ads that have class deleteAdsBtn or updateAdsBtn */
 .commentBtn:hover {
   cursor: pointer;
   color: var(--adsLogoColorHover);
-  transition: .3s;
+  transition: .5s;
 }
 
 .fa-solid-container {
@@ -497,6 +479,22 @@ th p {
 }
 
 /* CAROUSEL STYLING */
+.img2{
+  width: 100%;
+  height: 900px;
+}
+.carousel-caption {
+  position: absolute;
+  z-index: 1;
+  display:table;
+  width:100%;
+  height:100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+}
 
 .carousel-img {
   height: 400px;
@@ -507,7 +505,7 @@ th p {
   margin-top: 30px;
 }
 
-.advertismentName {
+.eventName {
   display: none;
 }
 
@@ -549,25 +547,20 @@ th p {
 }
 
 /* RESPONSIVE DESIGN */
-@media screen and (max-width: 1450px) {
-  body {
-    background: url("./images/446984.jpg") no repeat;
-    background-size: 350%;
-  }
-}
+
 
 @media screen and (max-width: 768px) {
   .reg-form {
     margin-top: 10px;
   }
 
-  .advertismentName {
+  .eventName {
     display: block;
     text-align: center;
     padding-bottom: 20px;
   }
 
-  .advertismentName h5 {
+  .eventName h5 {
     font-size: 1.2em;
     margin: 10px 0 0 10px;
     white-space: nowrap;

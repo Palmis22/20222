@@ -57,7 +57,7 @@ function adsDisplay(firebaseData, favoritesData, userID) {
                     <p class="card-text">${firebaseData[data].text}</p>
                 </div>
                 <div class="price-container">
-                    <div class="price">${firebaseData[data].price}$</div>
+                    <div class="price">${firebaseData[data].price}</div>
                 </div>
             </div>`
     };
@@ -228,7 +228,7 @@ function addCommentsHeader(adsID, userID) {
         modal.classList.remove('open-modal');
     })
 
-    // closing modal bu pressing not on modal but on document
+    // closing modal by pressing not on modal but on document
     window.addEventListener('click', function (e) {
         if (e.target === modal) {
             modal.classList.remove('open-modal');
@@ -254,7 +254,7 @@ function delComment() {
     commentDelBtns.forEach(btn => {
 
         btn.addEventListener('click', () => {
-            console.log('spaudziu')
+            console.log('paspaudziau')
             const uniqueAdsBtnID = btn.parentElement.getAttribute('data-id');
             console.log(uniqueAdsBtnID)
             get(ref(database, `comments/${uniqueAdsBtnID}`)).then((snapshot) => {
@@ -336,7 +336,7 @@ function deleteAdsBtnFunctionality() {
                 if (snapshot.exists()) {
                     remove(ref(database, `ads/${uniqueAdsBtnID}`))
                         .then(() => {
-                            universalModalFunctionality('Your advertisement deleted successfully!');
+                            universalModalFunctionality('Your event deleted successfully!');
                             window.location.reload();
                         })
                         .catch((error) => {
@@ -386,7 +386,7 @@ function updateAdsBtnsFunctionality() {
                         picture: adsPictureInput.value
                     })
                         .then(() => {
-                            universalModalFunctionality('Your advertisement updated succsessfully!');
+                            universalModalFunctionality('Your event updated succsessfully!');
                             window.location.reload();
                         })
                         .catch((error) => {
