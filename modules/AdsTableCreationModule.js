@@ -4,6 +4,7 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+import {userRoleIdentifikcation} from "../modules/roleIdentificationModule.js";
 
 import { firebaseConfig } from "../firebase.js";
 import { universalModalFunctionality } from "./universalModalModule.js";
@@ -29,42 +30,50 @@ function adsTableCreation(userID) {
 }
 
 // Ads rendering function
+
+
 function adsDisplay(firebaseData, favoritesData, userID) {
     const adsMainContainer = document.querySelector('.adsContainer');
     console.log(userID)
-    for (let data in firebaseData) {
+    userRoleIdentifikcation().then(log => {
 
-        let isFavorited = !!favoritesData && favoritesData[data + userID];
-        let isOwnerOrAdmin = (userID === firebaseData[data].userID ||
-            userID === 'tBmyoY8kdXUpDuoz5vnS1q1SsIe2');
-
-        adsMainContainer.innerHTML += `
-            <div class="card photo-card" data-id=${data} style="width: 18rem;">
-                <div class="photo-container">
-                    <img class="card-img-top" src=${firebaseData[data].picture} alt=${firebaseData[data].name}>
-                    <div class="favorite-logo-container">
-                        <i class="${isFavorited ? 'fa-solid' : 'fa-regular'} fa-star favoriteBtn" data-id=${data}></i>
+        for (let data in firebaseData) {
+    
+            let isFavorited = !!favoritesData && favoritesData[data + userID];
+            let isOwnerOrAdmin = (userID === firebaseData[data].userID ||
+                log == 'admin');
+                console.log(firebaseData[data])
+    
+            adsMainContainer.innerHTML += `
+                <div class="card photo-card" data-id=${data} style="width: 18rem;">
+                    <div class="photo-container">
+                        <img class="card-img-top" src=${firebaseData[data].picture} alt=${firebaseData[data].name}>
+                        <div class="favorite-logo-container">
+                            <i class="${isFavorited ? 'fa-solid' : 'fa-regular'} fa-star favoriteBtn" data-id=${data}></i>
+                        </div>
+                        <div class="fa-solid-container">
+                            <i class="fa-solid fa-square-minus adsDelI ${isOwnerOrAdmin ? 'deleteAdsBtn' : ''}"></i>
+                            <i class="fa-solid fa-square-pen adsUpdateI ${isOwnerOrAdmin ? 'updateAdsBtn' : ''}"></i>
+                            <i class="fa-solid fa-comment-dots commentBtn"></i>
+                        </div>
                     </div>
-                    <div class="fa-solid-container">
-                        <i class="fa-solid fa-square-minus adsDelI ${isOwnerOrAdmin ? 'deleteAdsBtn' : ''}"></i>
-                        <i class="fa-solid fa-square-pen adsUpdateI ${isOwnerOrAdmin ? 'updateAdsBtn' : ''}"></i>
-                        <i class="fa-solid fa-comment-dots commentBtn"></i>
+                    <div class="card-body">
+                        <h3 class="card-title photo-title">${firebaseData[data].name}</h3>
+                        <h5 class="card-title">${firebaseData[data].category}</h5>
+                        <p class="card-text">${firebaseData[data].text}</p>
                     </div>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title photo-title">${firebaseData[data].name}</h3>
-                    <h5 class="card-title">${firebaseData[data].category}</h5>
-                    <p class="card-text">${firebaseData[data].text}</p>
-                </div>
-                <div class="price-container">
-                    <div class="price">${firebaseData[data].price}</div>
-                </div>
-            </div>`
-    };
+                    <div class="price-container">
+                        <div class="price">${firebaseData[data].price}$</div>
+                    </div>
+                </div>`
+        };
+    
+    
     favoriteBtnsFunctionality(userID);
     modalComentFunctionality(userID);
     deleteAdsBtnFunctionality();
     updateAdsBtnsFunctionality();
+})
 };
 
 
@@ -228,7 +237,7 @@ function addCommentsHeader(adsID, userID) {
         modal.classList.remove('open-modal');
     })
 
-    // closing modal by pressing not on modal but on document
+    // closing modal bu pressing not on modal but on document
     window.addEventListener('click', function (e) {
         if (e.target === modal) {
             modal.classList.remove('open-modal');
@@ -254,7 +263,7 @@ function delComment() {
     commentDelBtns.forEach(btn => {
 
         btn.addEventListener('click', () => {
-            console.log('paspaudziau')
+            console.log('spaudziu')
             const uniqueAdsBtnID = btn.parentElement.getAttribute('data-id');
             console.log(uniqueAdsBtnID)
             get(ref(database, `comments/${uniqueAdsBtnID}`)).then((snapshot) => {
@@ -336,7 +345,7 @@ function deleteAdsBtnFunctionality() {
                 if (snapshot.exists()) {
                     remove(ref(database, `ads/${uniqueAdsBtnID}`))
                         .then(() => {
-                            universalModalFunctionality('Your event deleted successfully!');
+                            universalModalFunctionality('Your advertisement deleted successfully!');
                             window.location.reload();
                         })
                         .catch((error) => {
@@ -386,7 +395,7 @@ function updateAdsBtnsFunctionality() {
                         picture: adsPictureInput.value
                     })
                         .then(() => {
-                            universalModalFunctionality('Your event updated succsessfully!');
+                            universalModalFunctionality('Your advertisement updated succsessfully!');
                             window.location.reload();
                         })
                         .catch((error) => {
